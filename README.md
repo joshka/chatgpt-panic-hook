@@ -1,5 +1,10 @@
 # chatgpt-panic-hook
 
+[![Crates.io][crates-badge]][crates-url]
+[![Documentation][docs-badge]][docs-url]
+[![MSRV][msrv-badge]][manifest-url]
+[![License][license-badge]][license-url]
+
 The last panic hook you will ever need.
 
 When your Rust program panics, `chatgpt-panic-hook` preserves the normal panic output and opens
@@ -44,3 +49,12 @@ Rust does not have `try`/`catch`, but it does have panic hooks.
 ## License
 
 MIT
+
+[crates-badge]: https://img.shields.io/crates/v/chatgpt-panic-hook.svg
+[crates-url]: https://crates.io/crates/chatgpt-panic-hook
+[docs-badge]: https://docs.rs/chatgpt-panic-hook/badge.svg
+[docs-url]: https://docs.rs/chatgpt-panic-hook
+[license-badge]: https://img.shields.io/crates/l/chatgpt-panic-hook.svg
+[license-url]: LICENSE
+[manifest-url]: Cargo.toml
+[msrv-badge]: https://img.shields.io/crates/msrv/chatgpt-panic-hook
