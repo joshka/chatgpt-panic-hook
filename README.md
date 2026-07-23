@@ -26,6 +26,14 @@ cargo add chatgpt-panic-hook
 
 That is the entire API. Calling `install` more than once has no additional effect.
 
+From a repository checkout, run the example:
+
+```console
+cargo run --example panic
+```
+
+The command intentionally panics and opens ChatGPT in the default browser.
+
 ## Privacy
 
 This crate sends panic messages and source paths to `chatgpt.com` as a URL query parameter. Those
