@@ -4,27 +4,34 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
+  verify:
+    name: Verify
+    permissions:
+      contents: read
+    uses: ./.github/workflows/ci.yml
+
   release-plz-release:
     name: Release-plz release
     if: github.repository_owner == 'joshka'
+    needs: verify
     runs-on: ubuntu-latest
+    environment: release
     permissions:
       contents: write
       id-token: write
       pull-requests: read
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
       - name: Run release-plz
-        uses: release-plz/action@v0.5
+        uses: release-plz/action@1a0c5beec2fe4e91727549b5d2d0715ed28684bb # v0.5.131
         with:
           command: release
         env:
@@ -33,6 +40,7 @@ jobs:
   release-plz-pr:
     name: Release-plz PR
     if: github.repository_owner == 'joshka'
+    needs: verify
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -42,14 +50,14 @@ jobs:
       cancel-in-progress: false
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           persist-credentials: false
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
       - name: Run release-plz
-        uses: release-plz/action@v0.5
+        uses: release-plz/action@1a0c5beec2fe4e91727549b5d2d0715ed28684bb # v0.5.131
         with:
           command: release-pr
         env:
