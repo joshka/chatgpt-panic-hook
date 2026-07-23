@@ -1,8 +1,8 @@
 [package]
 name = "chatgpt-panic-hook"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
-rust-version = "1.85"
+rust-version = "1.86"
 description = "A panic hook that asks ChatGPT what went wrong"
 license = "MIT"
 readme = "README.md"
