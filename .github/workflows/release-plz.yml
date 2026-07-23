@@ -5,6 +5,8 @@ on:
     branches:
       - main
 
+permissions: {}
+
 jobs:
   verify:
     name: Verify
@@ -19,9 +21,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: release
     permissions:
-      contents: write
-      id-token: write
-      pull-requests: read
+      contents: write # Create the release tag and GitHub release.
+      id-token: write # Authenticate to crates.io with trusted publishing.
+      pull-requests: read # Read release metadata from the merged pull request.
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -43,8 +45,9 @@ jobs:
     needs: verify
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      actions: write # Dispatch CI for pull requests created by GITHUB_TOKEN.
+      contents: write # Create and update the release branch.
+      pull-requests: write # Create and update the release pull request.
     concurrency:
       group: release-plz-${{ github.ref }}
       cancel-in-progress: false
@@ -57,8 +60,17 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@4cda84d5c5c54efe2404f9d843567869ab1699d4 # stable
       - name: Run release-plz
+        id: release_pr
         uses: release-plz/action@1a0c5beec2fe4e91727549b5d2d0715ed28684bb # v0.5.131
         with:
           command: release-pr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run CI on the release PR
+        if: steps.release_pr.outputs.pr != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_PR: ${{ steps.release_pr.outputs.pr }}
+        run: |
+          head_branch="$(jq -er '.head_branch' <<< "$RELEASE_PR")"
+          gh workflow run ci.yml --ref "$head_branch"
