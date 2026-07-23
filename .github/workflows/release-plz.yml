@@ -73,11 +73,17 @@ jobs:
           RELEASE_PR: ${{ steps.release_pr.outputs.pr }}
         run: |
           head_branch="$(jq -er '.head_branch' <<< "$RELEASE_PR")"
+          pr_number="$(jq -er '.number' <<< "$RELEASE_PR")"
           for _ in {1..10}; do
+            head_sha="$(
+              gh api "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}" \
+                --jq '.head.sha'
+            )"
             run_id="$(
               gh api --method GET \
                 -f branch="$head_branch" \
                 -f event=pull_request \
+                -f head_sha="$head_sha" \
                 -f status=action_required \
                 -f per_page=1 \
                 "repos/${GITHUB_REPOSITORY}/actions/workflows/ci.yml/runs" \
