@@ -1,0 +1,15 @@
+[package]
+name = "chatgpt-panic-hook"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "A panic hook that asks ChatGPT what went wrong"
+license = "MIT"
+readme = "README.md"
+documentation = "https://docs.rs/chatgpt-panic-hook"
+keywords = ["chatgpt", "panic", "hook", "debugging"]
+categories = ["development-tools::debugging"]
+
+[dependencies]
+url = "2"
+webbrowser = { version = "1", features = ["hardened"] }
