@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.4](https://github.com/joshka/chatgpt-panic-hook/compare/v0.1.3...v0.1.4) - 2026-07-23
+
+### Other
+
+- Handle empty release PR output ([#7](https://github.com/joshka/chatgpt-panic-hook/pull/7))
+
 ## [0.1.3](https://github.com/joshka/chatgpt-panic-hook/compare/v0.1.2...v0.1.3) - 2026-07-23
 
 ### Other
