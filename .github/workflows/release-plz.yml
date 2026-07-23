@@ -72,8 +72,12 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_PR: ${{ steps.release_pr.outputs.pr }}
         run: |
+          pr_number="$(jq -r '.number // empty' <<< "$RELEASE_PR")"
+          if [[ -z "$pr_number" ]]; then
+            echo "No release pull request to approve"
+            exit 0
+          fi
           head_branch="$(jq -er '.head_branch' <<< "$RELEASE_PR")"
-          pr_number="$(jq -er '.number' <<< "$RELEASE_PR")"
           for _ in {1..10}; do
             head_sha="$(
               gh api "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}" \
