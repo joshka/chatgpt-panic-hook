@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.5](https://github.com/joshka/chatgpt-panic-hook/compare/v0.1.4...v0.1.5) - 2026-07-23
+
+### Other
+
+- Reduce release automation noise ([#9](https://github.com/joshka/chatgpt-panic-hook/pull/9))
+- Bump release-plz/action from 1a0c5beec2fe4e91727549b5d2d0715ed28684bb to 2eb1d8bcb770b4c48ccfaad919734b38b51958c9 in the github-actions group across 1 directory ([#2](https://github.com/joshka/chatgpt-panic-hook/pull/2))
+
 ## [0.1.4](https://github.com/joshka/chatgpt-panic-hook/compare/v0.1.3...v0.1.4) - 2026-07-23
 
 ### Other
