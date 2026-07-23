@@ -66,11 +66,29 @@ jobs:
           command: release-pr
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Run CI on the release PR
+      - name: Approve CI on the release PR
         if: steps.release_pr.outputs.pr != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_PR: ${{ steps.release_pr.outputs.pr }}
         run: |
           head_branch="$(jq -er '.head_branch' <<< "$RELEASE_PR")"
-          gh workflow run ci.yml --ref "$head_branch"
+          for _ in {1..10}; do
+            run_id="$(
+              gh api --method GET \
+                -f branch="$head_branch" \
+                -f event=pull_request \
+                -f status=action_required \
+                -f per_page=1 \
+                "repos/${GITHUB_REPOSITORY}/actions/workflows/ci.yml/runs" \
+                --jq '.workflow_runs[0].id // empty'
+            )"
+            if [[ -n "$run_id" ]]; then
+              gh api --method POST \
+                "repos/${GITHUB_REPOSITORY}/actions/runs/${run_id}/approve"
+              exit 0
+            fi
+            sleep 3
+          done
+          echo "::error::No CI run awaiting approval for ${head_branch}" >&2
+          exit 1
