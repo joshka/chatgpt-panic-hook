@@ -7,6 +7,7 @@ description = "A panic hook that asks ChatGPT what went wrong"
 license = "MIT"
 readme = "README.md"
 documentation = "https://docs.rs/chatgpt-panic-hook"
+repository = "https://github.com/joshka/chatgpt-panic-hook"
 keywords = ["chatgpt", "panic", "hook", "debugging"]
 categories = ["development-tools::debugging"]
 
