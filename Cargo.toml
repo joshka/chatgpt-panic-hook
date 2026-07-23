@@ -10,6 +10,7 @@ documentation = "https://docs.rs/chatgpt-panic-hook"
 repository = "https://github.com/joshka/chatgpt-panic-hook"
 keywords = ["chatgpt", "panic", "hook", "debugging"]
 categories = ["development-tools::debugging"]
+exclude = [".github/", "release-plz.toml"]
 
 [dependencies]
 url = "2"
